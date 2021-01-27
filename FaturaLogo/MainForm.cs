@@ -17,14 +17,28 @@ namespace FaturaLogo
         public MainForm()
         {
             InitializeComponent();
+            if (File.Exists("previoulogo.txt"))
+            {
+                openFileDialogLogo.FileName =  File.ReadAllText("previoulogo.txt");
+                pictureBoxLogo.ImageLocation = File.ReadAllText("previoulogo.txt");
+
+            }
+
         }
         private void htmlDocument_Click(object sender, HtmlElementEventArgs e)
         {
-            HtmlElement element = this.FaturayaLogo.Document.GetElementFromPoint(e.ClientMousePosition);
-            element.Id = "sirketLogoParent";
-            element.Style += "background-color:#efefef;";
-            this.FaturayaLogo.Document.MouseUp -= htmlDocument_Click;
-            btnLogoSec.Visible = true;
+            HtmlElement logo = this.FaturayaLogoBrowser.Document.GetElementById("sirketLogo");
+            if (logo != null)
+            {
+                logo.OuterHtml = "";
+            }
+            HtmlElement element = this.FaturayaLogoBrowser.Document.GetElementFromPoint(e.ClientMousePosition);
+            HtmlElement userimage = FaturayaLogoBrowser.Document.CreateElement("img");
+            userimage.SetAttribute("src", openFileDialogLogo.FileName);
+            userimage.Id = "sirketLogo";
+            userimage.Style = "width:150px; height:150px;";
+            element.AppendChild(userimage);
+
         }
 
         private void btnFaturaSec_Click(object sender, EventArgs e)
@@ -44,15 +58,15 @@ namespace FaturaLogo
                                         .Open(), Encoding.UTF8)
                                         .ReadToEnd())
                                         .ToArray());
-                        FaturayaLogo.DocumentText = text;
+                        FaturayaLogoBrowser.DocumentText = text;
                     }
                     else
                     {
-                        FaturayaLogo.DocumentText = File.ReadAllText(openFileDialogFatura.FileName);
+                        FaturayaLogoBrowser.DocumentText = File.ReadAllText(openFileDialogFatura.FileName);
                     }
-
-                    this.FaturayaLogo.Document.MouseUp += new HtmlElementEventHandler(this.htmlDocument_Click);
-                    MessageBox.Show("Fatura üzerinde logonun eklenecği yere tıklayın. Arka planı gri olacak. Yanlış tıklarsanız tekrar fatura dosyası seçin.");
+                    btnLogoSec.Visible = true;
+                    this.FaturayaLogoBrowser.Document.MouseUp += new HtmlElementEventHandler(this.htmlDocument_Click);
+                    MessageBox.Show("Logo Seçin ve fatura üzerinde logoyu eklemek istediğiniz yere tıklayın. Yer değiştirmek için de tıklayabilirsiniz.");
                 }
                 else
                 {
@@ -64,19 +78,12 @@ namespace FaturaLogo
 
         private void btnLogoSec_Click(object sender, EventArgs e)
         {
-            openFileDialogFatura.Filter = "fatura logo |*.jpg;*.jpeg;*.png;*.gif;*.bmp;*.jfif";
-            if (openFileDialogFatura.ShowDialog() == DialogResult.OK)
+            openFileDialogLogo.Filter = "fatura logo |*.jpg;*.jpeg;*.png;*.gif;*.bmp;*.jfif";
+            if (openFileDialogLogo.ShowDialog() == DialogResult.OK)
             {
 
-                if (ImageExtensions.Contains(Path.GetExtension(openFileDialogFatura.FileName).ToUpperInvariant()))
+                if (ImageExtensions.Contains(Path.GetExtension(openFileDialogLogo.FileName).ToUpperInvariant()))
                 {
-                    HtmlElement userimage = FaturayaLogo.Document.CreateElement("img");
-                    userimage.SetAttribute("src", openFileDialogFatura.FileName);
-                    userimage.Id = "sirketLogo";
-                    userimage.Style = "width:150px;";
-                    HtmlElement element = FaturayaLogo.Document.GetElementById("sirketLogoParent");
-                    element.AppendChild(userimage);
-                    element.Style = element.Style.Replace("BACKGROUND-COLOR: #efefef", "");
 
                     label1.Visible = true;
                     label2.Visible = true;
@@ -84,9 +91,9 @@ namespace FaturaLogo
                     txtHeight.Visible = true;
                     btnPrint.Visible = true;
                     txtWidth.Text = "150";
-                    txtWidth.Text = "150";
-
-
+                    txtHeight.Text = "150";
+                    File.WriteAllText("previoulogo.txt", openFileDialogLogo.FileName);
+                    pictureBoxLogo.ImageLocation = openFileDialogLogo.FileName;
                 }
                 else
                 {
@@ -102,7 +109,11 @@ namespace FaturaLogo
                 MessageBox.Show("Please enter only numbers.");
                 txtWidth.Text = txtWidth.Text.Remove(txtWidth.Text.Length - 1);
             }
-            FaturayaLogo.Document.GetElementById("sirketLogo").Style = "width:" + txtWidth.Text + "px;";
+            HtmlElement logo = FaturayaLogoBrowser.Document.GetElementById("sirketLogo");
+            if (logo != null)
+            {
+                logo.Style = "width:" + txtWidth.Text + "px;";
+            }
         }
 
         private void txtHeight_TextChanged(object sender, EventArgs e)
@@ -112,19 +123,23 @@ namespace FaturaLogo
                 MessageBox.Show("Please enter only numbers.");
                 txtHeight.Text = txtHeight.Text.Remove(txtHeight.Text.Length - 1);
             }
-            FaturayaLogo.Document.GetElementById("sirketLogo").Style = "width:" + txtHeight.Text + "px;";
+            HtmlElement logo = FaturayaLogoBrowser.Document.GetElementById("sirketLogo");
+            if (logo != null)
+            {
+                logo.Style = "width:" + txtHeight.Text + "px;";
+            }
         }
 
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
-            FaturayaLogo.Width = Convert.ToInt32(this.Width * 0.80);
-            işlemler.Width = Convert.ToInt32(this.Width * 0.15);
-            FaturayaLogo.Left = işlemler.Right + 10;
+            FaturayaLogoBrowser.Width = Convert.ToInt32(this.Width * 0.80);
+            grpBox1.Width = Convert.ToInt32(this.Width * 0.15);
+            FaturayaLogoBrowser.Left = grpBox1.Right + 10;
         }
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
-            FaturayaLogo.ShowPrintDialog();
+            FaturayaLogoBrowser.ShowPrintDialog();
         }
     }
 }

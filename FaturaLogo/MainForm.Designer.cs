@@ -31,16 +31,19 @@ namespace FaturaLogo
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btnFaturaSec = new System.Windows.Forms.Button();
-            this.FaturayaLogo = new System.Windows.Forms.WebBrowser();
+            this.FaturayaLogoBrowser = new System.Windows.Forms.WebBrowser();
             this.openFileDialogFatura = new System.Windows.Forms.OpenFileDialog();
             this.btnLogoSec = new System.Windows.Forms.Button();
             this.txtWidth = new System.Windows.Forms.TextBox();
             this.txtHeight = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.işlemler = new System.Windows.Forms.GroupBox();
+            this.grpBox1 = new System.Windows.Forms.GroupBox();
             this.btnPrint = new System.Windows.Forms.Button();
-            this.işlemler.SuspendLayout();
+            this.openFileDialogLogo = new System.Windows.Forms.OpenFileDialog();
+            this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
+            this.grpBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // btnFaturaSec
@@ -53,13 +56,13 @@ namespace FaturaLogo
             this.btnFaturaSec.UseVisualStyleBackColor = true;
             this.btnFaturaSec.Click += new System.EventHandler(this.btnFaturaSec_Click);
             // 
-            // FaturayaLogo
+            // FaturayaLogoBrowser
             // 
-            this.FaturayaLogo.Location = new System.Drawing.Point(203, 13);
-            this.FaturayaLogo.MinimumSize = new System.Drawing.Size(20, 20);
-            this.FaturayaLogo.Name = "FaturayaLogo";
-            this.FaturayaLogo.Size = new System.Drawing.Size(1083, 576);
-            this.FaturayaLogo.TabIndex = 1;
+            this.FaturayaLogoBrowser.Location = new System.Drawing.Point(203, 13);
+            this.FaturayaLogoBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.FaturayaLogoBrowser.Name = "FaturayaLogoBrowser";
+            this.FaturayaLogoBrowser.Size = new System.Drawing.Size(1083, 576);
+            this.FaturayaLogoBrowser.TabIndex = 1;
             // 
             // openFileDialogFatura
             // 
@@ -114,21 +117,22 @@ namespace FaturaLogo
             this.label2.Text = "Yükseklik";
             this.label2.Visible = false;
             // 
-            // işlemler
+            // grpBox1
             // 
-            this.işlemler.Controls.Add(this.btnPrint);
-            this.işlemler.Controls.Add(this.btnFaturaSec);
-            this.işlemler.Controls.Add(this.label2);
-            this.işlemler.Controls.Add(this.btnLogoSec);
-            this.işlemler.Controls.Add(this.label1);
-            this.işlemler.Controls.Add(this.txtWidth);
-            this.işlemler.Controls.Add(this.txtHeight);
-            this.işlemler.Location = new System.Drawing.Point(12, 13);
-            this.işlemler.Name = "işlemler";
-            this.işlemler.Size = new System.Drawing.Size(185, 199);
-            this.işlemler.TabIndex = 6;
-            this.işlemler.TabStop = false;
-            this.işlemler.Text = "groupBox1";
+            this.grpBox1.Controls.Add(this.pictureBoxLogo);
+            this.grpBox1.Controls.Add(this.btnPrint);
+            this.grpBox1.Controls.Add(this.btnFaturaSec);
+            this.grpBox1.Controls.Add(this.label2);
+            this.grpBox1.Controls.Add(this.btnLogoSec);
+            this.grpBox1.Controls.Add(this.label1);
+            this.grpBox1.Controls.Add(this.txtWidth);
+            this.grpBox1.Controls.Add(this.txtHeight);
+            this.grpBox1.Location = new System.Drawing.Point(12, 13);
+            this.grpBox1.Name = "grpBox1";
+            this.grpBox1.Size = new System.Drawing.Size(185, 320);
+            this.grpBox1.TabIndex = 6;
+            this.grpBox1.TabStop = false;
+            this.grpBox1.Text = "İşlemler";
             // 
             // btnPrint
             // 
@@ -141,19 +145,33 @@ namespace FaturaLogo
             this.btnPrint.Visible = false;
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
+            // openFileDialogLogo
+            // 
+            this.openFileDialogLogo.FileName = "openFileDialog1";
+            // 
+            // pictureBoxLogo
+            // 
+            this.pictureBoxLogo.Location = new System.Drawing.Point(6, 209);
+            this.pictureBoxLogo.Name = "pictureBoxLogo";
+            this.pictureBoxLogo.Size = new System.Drawing.Size(158, 105);
+            this.pictureBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxLogo.TabIndex = 7;
+            this.pictureBoxLogo.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1298, 511);
-            this.Controls.Add(this.işlemler);
-            this.Controls.Add(this.FaturayaLogo);
+            this.Controls.Add(this.grpBox1);
+            this.Controls.Add(this.FaturayaLogoBrowser);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "Kafkas oto lastik";
             this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
-            this.işlemler.ResumeLayout(false);
-            this.işlemler.PerformLayout();
+            this.grpBox1.ResumeLayout(false);
+            this.grpBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -161,15 +179,17 @@ namespace FaturaLogo
         #endregion
 
         private System.Windows.Forms.Button btnFaturaSec;
-        private System.Windows.Forms.WebBrowser FaturayaLogo;
+        private System.Windows.Forms.WebBrowser FaturayaLogoBrowser;
         private System.Windows.Forms.OpenFileDialog openFileDialogFatura;
         private System.Windows.Forms.Button btnLogoSec;
         private System.Windows.Forms.TextBox txtWidth;
         private System.Windows.Forms.TextBox txtHeight;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.GroupBox işlemler;
+        private System.Windows.Forms.GroupBox grpBox1;
         private System.Windows.Forms.Button btnPrint;
+        private System.Windows.Forms.OpenFileDialog openFileDialogLogo;
+        private System.Windows.Forms.PictureBox pictureBoxLogo;
     }
 }
 
