@@ -74,7 +74,7 @@ namespace FaturaLogo
             this.btnLogoSec.Name = "btnLogoSec";
             this.btnLogoSec.Size = new System.Drawing.Size(158, 23);
             this.btnLogoSec.TabIndex = 2;
-            this.btnLogoSec.Text = "Logo Seç";
+            this.btnLogoSec.Text = "Logo / kaşe Seç";
             this.btnLogoSec.UseVisualStyleBackColor = true;
             this.btnLogoSec.Visible = false;
             this.btnLogoSec.Click += new System.EventHandler(this.btnLogoSec_Click);
