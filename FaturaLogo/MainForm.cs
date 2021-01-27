@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,19 +30,33 @@ namespace FaturaLogo
         private void btnFaturaSec_Click(object sender, EventArgs e)
         {
 
-            openFileDialogFatura.Filter = "fatura dosyası |*.html";
+            openFileDialogFatura.Filter = "fatura dosyası |*.html;*.zip";
             if (openFileDialogFatura.ShowDialog() == DialogResult.OK)
             {
-                if (Path.GetExtension(openFileDialogFatura.FileName) == ".html")
+                if (Path.GetExtension(openFileDialogFatura.FileName) == ".html" || Path.GetExtension(openFileDialogFatura.FileName) == ".zip")
                 {
-                    FaturayaLogo.DocumentText = File.ReadAllText(openFileDialogFatura.FileName);
-                    HtmlDocument document = this.FaturayaLogo.Document;
-                    document.MouseUp += new HtmlElementEventHandler(this.htmlDocument_Click);
+                    if (Path.GetExtension(openFileDialogFatura.FileName) == ".zip")
+                    {
+                        string text = new string((new StreamReader(
+                                        ZipFile.OpenRead(openFileDialogFatura.FileName)
+                                        .Entries.Where(x => x.Name.Contains(".html"))
+                                        .FirstOrDefault()
+                                        .Open(), Encoding.UTF8)
+                                        .ReadToEnd())
+                                        .ToArray());
+                        FaturayaLogo.DocumentText = text;
+                    }
+                    else
+                    {
+                        FaturayaLogo.DocumentText = File.ReadAllText(openFileDialogFatura.FileName);
+                    }
+
+                    this.FaturayaLogo.Document.MouseUp += new HtmlElementEventHandler(this.htmlDocument_Click);
                     MessageBox.Show("Fatura üzerinde logonun eklenecği yere tıklayın. Arka planı gri olacak. Yanlış tıklarsanız tekrar fatura dosyası seçin.");
                 }
                 else
                 {
-                    MessageBox.Show("Sonu html ile biten dosya seçin");
+                    MessageBox.Show("Sonu html veya zip ile biten dosya seçin");
                 }
             }
         }
@@ -69,7 +84,7 @@ namespace FaturaLogo
                     txtHeight.Visible = true;
                     btnPrint.Visible = true;
                     txtWidth.Text = "150";
-                    txtWidth.Text= "150";
+                    txtWidth.Text = "150";
 
 
                 }
