@@ -21,7 +21,7 @@ namespace FaturaLogo
             {
                 openFileDialogLogo.FileName =  File.ReadAllText("previoulogo.txt");
                 pictureBoxLogo.ImageLocation = File.ReadAllText("previoulogo.txt");
-
+                FaturayaLogoBrowser.DocumentText = "E-arşiv faturasını indirin. Zip veya html dosyasını seçin.";
             }
 
         }
