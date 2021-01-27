@@ -17,11 +17,11 @@ namespace FaturaLogo
         public MainForm()
         {
             InitializeComponent();
+            FaturayaLogoBrowser.DocumentText = "E-arşiv faturasını indirin. Zip veya html dosyasını seçin.";
             if (File.Exists("previoulogo.txt"))
             {
-                openFileDialogLogo.FileName =  File.ReadAllText("previoulogo.txt");
+                openFileDialogLogo.FileName = File.ReadAllText("previoulogo.txt");
                 pictureBoxLogo.ImageLocation = File.ReadAllText("previoulogo.txt");
-                FaturayaLogoBrowser.DocumentText = "E-arşiv faturasını indirin. Zip veya html dosyasını seçin.";
             }
 
         }
