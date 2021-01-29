@@ -121,8 +121,8 @@ namespace FaturaLogo
                         FaturayaLogoBrowser.DocumentText = File.ReadAllText(openFileDialogFatura.FileName);
                     }
                     this.FaturayaLogoBrowser.Document.MouseUp += new HtmlElementEventHandler(this.htmlDocument_Click);
-                    FaturayaLogoBrowser.Document.MouseOver += new HtmlElementEventHandler(Document_MouseOver);
-                    FaturayaLogoBrowser.Document.MouseLeave += new HtmlElementEventHandler(Document_MouseLeave);
+                    //FaturayaLogoBrowser.Document.MouseOver += new HtmlElementEventHandler(Document_MouseOver);
+                    //FaturayaLogoBrowser.Document.MouseLeave += new HtmlElementEventHandler(Document_MouseLeave);
                     MessageBox.Show("Logo Seçin ve fatura üzerinde logoyu eklemek istediğiniz yere tıklayın. Yer değiştirmek için de tıklayabilirsiniz.");
                     radioLogo.Checked = true;
                 }
