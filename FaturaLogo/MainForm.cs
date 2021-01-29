@@ -15,26 +15,35 @@ namespace FaturaLogo
 {
     public partial class MainForm : Form
     {
+        StyleGenerator sg = new StyleGenerator();
+        HtmlElement elem = null;
+        string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\faturalogo\\";
         public MainForm()
         {
             InitializeComponent();
-            if (File.Exists("previoulogo.txt"))
+            if (!Directory.Exists(appDataPath))
             {
-                openFileDialogLogo.FileName = File.ReadAllText("previoulogo.txt");
-                pictureBoxLogo.ImageLocation = File.ReadAllText("previoulogo.txt");
+                Directory.CreateDirectory(appDataPath);
+            }
+            if (File.Exists(appDataPath + "previoulogo.txt"))
+            {
+                openFileDialogLogo.FileName = File.ReadAllText(appDataPath + "previoulogo.txt");
+                pictureBoxLogo.ImageLocation = File.ReadAllText(appDataPath + "previoulogo.txt");
             }
 
 
-            if (File.Exists("previoukase.txt"))
+            if (File.Exists(appDataPath + "previoukase.txt"))
             {
-                openFileDialogKase.FileName = File.ReadAllText("previoukase.txt");
-                pictureBoxKase.ImageLocation = File.ReadAllText("previoukase.txt");
+                openFileDialogKase.FileName = File.ReadAllText(appDataPath + "previoukase.txt");
+                pictureBoxKase.ImageLocation = File.ReadAllText(appDataPath + "previoukase.txt");
             }
 
             FaturayaLogoBrowser.DocumentText = "E-arşiv faturasını indirin. Zip veya html dosyasını seçin.";
         }
         private void htmlDocument_Click(object sender, HtmlElementEventArgs e)
         {
+            HtmlElement userimage = FaturayaLogoBrowser.Document.CreateElement("img");
+            HtmlElement element = this.FaturayaLogoBrowser.Document.GetElementFromPoint(e.ClientMousePosition);
             if (radioKase.Checked)
             {
                 HtmlElement kase = this.FaturayaLogoBrowser.Document.GetElementById("sirketKase");
@@ -42,12 +51,8 @@ namespace FaturaLogo
                 {
                     kase.OuterHtml = "";
                 }
-                HtmlElement element = this.FaturayaLogoBrowser.Document.GetElementFromPoint(e.ClientMousePosition);
-                HtmlElement userimage = FaturayaLogoBrowser.Document.CreateElement("img");
                 userimage.SetAttribute("src", openFileDialogKase.FileName);
                 userimage.Id = "sirketKase";
-                userimage.Style = "width:150px; height:150px;";
-                element.AppendChild(userimage);
             }
             else
             {
@@ -56,15 +61,32 @@ namespace FaturaLogo
                 {
                     logo.OuterHtml = "";
                 }
-                HtmlElement element = this.FaturayaLogoBrowser.Document.GetElementFromPoint(e.ClientMousePosition);
-                HtmlElement userimage = FaturayaLogoBrowser.Document.CreateElement("img");
                 userimage.SetAttribute("src", openFileDialogLogo.FileName);
                 userimage.Id = "sirketLogo";
-                userimage.Style = "width:150px; height:150px;";
-                element.AppendChild(userimage);
             }
 
+            userimage.Style = "width:150px; height:150px;";
+            element.AppendChild(userimage);
 
+        }
+        void Document_MouseOver(object sender, HtmlElementEventArgs e)
+        {
+            elem = FaturayaLogoBrowser.Document.GetElementFromPoint(e.MousePosition);
+
+            sg.ParseStyleString(elem.Style);
+            sg.SetStyle("background-color", "#dcdcdc");
+            elem.Style = sg.GetStyleString();
+        }
+
+        void Document_MouseLeave(object sender, HtmlElementEventArgs e)
+        {
+            if (elem != null)
+            {
+                sg.RemoveStyle("background-color");
+                elem.Style = sg.GetStyleString();
+                // Reset, since we may mouse over a new DIV element next time.
+                sg.Clear();
+            }
         }
 
         private void btnFaturaSec_Click(object sender, EventArgs e)
@@ -92,15 +114,17 @@ namespace FaturaLogo
                                         .ReadToEnd())
                                         .ToArray());
                         FaturayaLogoBrowser.DocumentText = text;
+
                     }
                     else
                     {
                         FaturayaLogoBrowser.DocumentText = File.ReadAllText(openFileDialogFatura.FileName);
                     }
-                    btnLogoSec.Visible = true;
-                    btnKaseSec.Visible = true;
                     this.FaturayaLogoBrowser.Document.MouseUp += new HtmlElementEventHandler(this.htmlDocument_Click);
+                    FaturayaLogoBrowser.Document.MouseOver += new HtmlElementEventHandler(Document_MouseOver);
+                    FaturayaLogoBrowser.Document.MouseLeave += new HtmlElementEventHandler(Document_MouseLeave);
                     MessageBox.Show("Logo Seçin ve fatura üzerinde logoyu eklemek istediğiniz yere tıklayın. Yer değiştirmek için de tıklayabilirsiniz.");
+                    radioLogo.Checked = true;
                 }
                 else
                 {
@@ -119,17 +143,10 @@ namespace FaturaLogo
                 if (ImageExtensions.Contains(Path.GetExtension(openFileDialogLogo.FileName).ToUpperInvariant()))
                 {
 
-                    label1.Visible = true;
-                    label2.Visible = true;
-                    txtWidth.Visible = true;
-                    txtHeight.Visible = true;
-                    btnPrint.Visible = true;
-                    btnPdf.Visible = true;
                     txtWidth.Text = "150";
                     txtHeight.Text = "150";
-                    File.WriteAllText("previoulogo.txt", openFileDialogLogo.FileName);
+                    File.WriteAllText(appDataPath + "previoulogo.txt", openFileDialogLogo.FileName);
                     pictureBoxLogo.ImageLocation = openFileDialogLogo.FileName;
-                    radioLogo.Checked = true;
                 }
                 else
                 {
@@ -140,25 +157,30 @@ namespace FaturaLogo
 
         private void txtWidth_TextChanged(object sender, EventArgs e)
         {
+
             if (System.Text.RegularExpressions.Regex.IsMatch(txtWidth.Text, "[^0-9]"))
             {
                 MessageBox.Show("Sadece sayı girin.");
                 txtWidth.Text = txtWidth.Text.Remove(txtWidth.Text.Length - 1);
             }
-            if (radioKase.Checked)
+            if (radioLogo.Checked)
             {
                 HtmlElement logo = FaturayaLogoBrowser.Document.GetElementById("sirketLogo");
                 if (logo != null)
                 {
-                    logo.Style = "width:" + txtWidth.Text + "px;";
+                    sg.ParseStyleString(logo.Style);
+                    sg.SetStyle("width", txtWidth.Text + "px;");
+                    logo.Style = sg.GetStyleString();
                 }
             }
             else
             {
-                HtmlElement logo = FaturayaLogoBrowser.Document.GetElementById("sirketKase");
-                if (logo != null)
+                HtmlElement kase = FaturayaLogoBrowser.Document.GetElementById("sirketKase");
+                if (kase != null)
                 {
-                    logo.Style = "width:" + txtWidth.Text + "px;";
+                    sg.ParseStyleString(kase.Style);
+                    sg.SetStyle("width", txtWidth.Text + "px;");
+                    kase.Style = sg.GetStyleString();
                 }
             }
         }
@@ -170,20 +192,24 @@ namespace FaturaLogo
                 MessageBox.Show("Sadece sayı girin.");
                 txtHeight.Text = txtHeight.Text.Remove(txtHeight.Text.Length - 1);
             }
-            if (radioKase.Checked)
+            if (radioLogo.Checked)
             {
                 HtmlElement logo = FaturayaLogoBrowser.Document.GetElementById("sirketLogo");
                 if (logo != null)
                 {
-                    logo.Style = "heigt:" + txtHeight.Text + "px;";
+                    sg.ParseStyleString(logo.Style);
+                    sg.SetStyle("height", txtHeight.Text + "px;");
+                    logo.Style = sg.GetStyleString();
                 }
             }
             else
             {
-                HtmlElement logo = FaturayaLogoBrowser.Document.GetElementById("sirketKase");
-                if (logo != null)
+                HtmlElement kase = FaturayaLogoBrowser.Document.GetElementById("sirketKase");
+                if (kase != null)
                 {
-                    logo.Style = "heigt:" + txtHeight.Text + "px;";
+                    sg.ParseStyleString(kase.Style);
+                    sg.SetStyle("height", txtHeight.Text + "px;");
+                    kase.Style = sg.GetStyleString();
                 }
             }
         }
@@ -222,15 +248,7 @@ namespace FaturaLogo
 
                 if (ImageExtensions.Contains(Path.GetExtension(openFileDialogKase.FileName).ToUpperInvariant()))
                 {
-                    label1.Visible = true;
-                    label2.Visible = true;
-                    txtWidth.Visible = true;
-                    txtHeight.Visible = true;
-                    btnPrint.Visible = true;
-                    btnPdf.Visible = true;
-                    txtWidth.Text = "150";
-                    txtHeight.Text = "150";
-                    File.WriteAllText("previoukase.txt", openFileDialogKase.FileName);
+                    File.WriteAllText(appDataPath + "previoukase.txt", openFileDialogKase.FileName);
                     pictureBoxKase.ImageLocation = openFileDialogKase.FileName;
                     radioKase.Checked = true;
 
@@ -239,6 +257,15 @@ namespace FaturaLogo
                 {
                     MessageBox.Show("Resim dosyası seçin");
                 }
+            }
+        }
+
+        private void btnKarekodKaldir_Click(object sender, EventArgs e)
+        {
+            HtmlElement qc = this.FaturayaLogoBrowser.Document.GetElementById("qrcode");
+            if (qc != null)
+            {
+                qc.InnerHtml = "";
             }
         }
     }

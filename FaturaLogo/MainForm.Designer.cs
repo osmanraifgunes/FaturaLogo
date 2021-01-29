@@ -49,6 +49,7 @@ namespace FaturaLogo
             this.openFileDialogLogo = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogKase = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogPdf = new System.Windows.Forms.SaveFileDialog();
+            this.btnKarekodKaldir = new System.Windows.Forms.Button();
             this.grpBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxKase)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
@@ -69,7 +70,7 @@ namespace FaturaLogo
             this.FaturayaLogoBrowser.Location = new System.Drawing.Point(203, 13);
             this.FaturayaLogoBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.FaturayaLogoBrowser.Name = "FaturayaLogoBrowser";
-            this.FaturayaLogoBrowser.Size = new System.Drawing.Size(1083, 576);
+            this.FaturayaLogoBrowser.Size = new System.Drawing.Size(1083, 684);
             this.FaturayaLogoBrowser.TabIndex = 1;
             // 
             // openFileDialogFatura
@@ -78,55 +79,53 @@ namespace FaturaLogo
             // 
             // btnLogoSec
             // 
-            this.btnLogoSec.Location = new System.Drawing.Point(6, 48);
+            this.btnLogoSec.Location = new System.Drawing.Point(6, 55);
             this.btnLogoSec.Name = "btnLogoSec";
             this.btnLogoSec.Size = new System.Drawing.Size(158, 23);
             this.btnLogoSec.TabIndex = 2;
             this.btnLogoSec.Text = "Logo Seç";
             this.btnLogoSec.UseVisualStyleBackColor = true;
-            this.btnLogoSec.Visible = false;
             this.btnLogoSec.Click += new System.EventHandler(this.btnLogoSec_Click);
             // 
             // txtWidth
             // 
-            this.txtWidth.Location = new System.Drawing.Point(64, 114);
+            this.txtWidth.Location = new System.Drawing.Point(64, 201);
             this.txtWidth.Name = "txtWidth";
             this.txtWidth.Size = new System.Drawing.Size(100, 20);
             this.txtWidth.TabIndex = 3;
-            this.txtWidth.Visible = false;
+            this.txtWidth.Text = "150";
             this.txtWidth.TextChanged += new System.EventHandler(this.txtWidth_TextChanged);
             // 
             // txtHeight
             // 
-            this.txtHeight.Location = new System.Drawing.Point(64, 149);
+            this.txtHeight.Location = new System.Drawing.Point(64, 236);
             this.txtHeight.Name = "txtHeight";
             this.txtHeight.Size = new System.Drawing.Size(100, 20);
             this.txtHeight.TabIndex = 3;
-            this.txtHeight.Visible = false;
+            this.txtHeight.Text = "150";
             this.txtHeight.TextChanged += new System.EventHandler(this.txtHeight_TextChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 117);
+            this.label1.Location = new System.Drawing.Point(3, 204);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(46, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "Uzunluk";
-            this.label1.Visible = false;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 152);
+            this.label2.Location = new System.Drawing.Point(3, 239);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 5;
             this.label2.Text = "Yükseklik";
-            this.label2.Visible = false;
             // 
             // grpBox1
             // 
+            this.grpBox1.Controls.Add(this.btnKarekodKaldir);
             this.grpBox1.Controls.Add(this.btnKaseSec);
             this.grpBox1.Controls.Add(this.btnPdf);
             this.grpBox1.Controls.Add(this.radioKase);
@@ -142,37 +141,35 @@ namespace FaturaLogo
             this.grpBox1.Controls.Add(this.txtHeight);
             this.grpBox1.Location = new System.Drawing.Point(12, 13);
             this.grpBox1.Name = "grpBox1";
-            this.grpBox1.Size = new System.Drawing.Size(185, 540);
+            this.grpBox1.Size = new System.Drawing.Size(185, 654);
             this.grpBox1.TabIndex = 6;
             this.grpBox1.TabStop = false;
             this.grpBox1.Text = "İşlemler";
             // 
             // btnKaseSec
             // 
-            this.btnKaseSec.Location = new System.Drawing.Point(6, 77);
+            this.btnKaseSec.Location = new System.Drawing.Point(6, 92);
             this.btnKaseSec.Name = "btnKaseSec";
             this.btnKaseSec.Size = new System.Drawing.Size(158, 23);
             this.btnKaseSec.TabIndex = 15;
             this.btnKaseSec.Text = "Kaşe Seç";
             this.btnKaseSec.UseVisualStyleBackColor = true;
-            this.btnKaseSec.Visible = false;
             this.btnKaseSec.Click += new System.EventHandler(this.btnKaseSec_Click);
             // 
             // btnPdf
             // 
-            this.btnPdf.Location = new System.Drawing.Point(6, 186);
+            this.btnPdf.Location = new System.Drawing.Point(6, 273);
             this.btnPdf.Name = "btnPdf";
             this.btnPdf.Size = new System.Drawing.Size(158, 23);
             this.btnPdf.TabIndex = 13;
             this.btnPdf.Text = "pdf çıktı";
             this.btnPdf.UseVisualStyleBackColor = true;
-            this.btnPdf.Visible = false;
             this.btnPdf.Click += new System.EventHandler(this.btnPdf_Click);
             // 
             // radioKase
             // 
             this.radioKase.AutoSize = true;
-            this.radioKase.Location = new System.Drawing.Point(6, 281);
+            this.radioKase.Location = new System.Drawing.Point(6, 368);
             this.radioKase.Name = "radioKase";
             this.radioKase.Size = new System.Drawing.Size(71, 17);
             this.radioKase.TabIndex = 12;
@@ -183,7 +180,7 @@ namespace FaturaLogo
             // radioLogo
             // 
             this.radioLogo.AutoSize = true;
-            this.radioLogo.Location = new System.Drawing.Point(6, 257);
+            this.radioLogo.Location = new System.Drawing.Point(6, 344);
             this.radioLogo.Name = "radioLogo";
             this.radioLogo.Size = new System.Drawing.Size(68, 17);
             this.radioLogo.TabIndex = 11;
@@ -193,7 +190,7 @@ namespace FaturaLogo
             // 
             // pictureBoxKase
             // 
-            this.pictureBoxKase.Location = new System.Drawing.Point(6, 416);
+            this.pictureBoxKase.Location = new System.Drawing.Point(6, 503);
             this.pictureBoxKase.Name = "pictureBoxKase";
             this.pictureBoxKase.Size = new System.Drawing.Size(158, 105);
             this.pictureBoxKase.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -202,7 +199,7 @@ namespace FaturaLogo
             // 
             // pictureBoxLogo
             // 
-            this.pictureBoxLogo.Location = new System.Drawing.Point(6, 305);
+            this.pictureBoxLogo.Location = new System.Drawing.Point(6, 392);
             this.pictureBoxLogo.Name = "pictureBoxLogo";
             this.pictureBoxLogo.Size = new System.Drawing.Size(158, 105);
             this.pictureBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -211,13 +208,12 @@ namespace FaturaLogo
             // 
             // btnPrint
             // 
-            this.btnPrint.Location = new System.Drawing.Point(6, 225);
+            this.btnPrint.Location = new System.Drawing.Point(6, 312);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(158, 23);
             this.btnPrint.TabIndex = 6;
             this.btnPrint.Text = "Yazdır";
             this.btnPrint.UseVisualStyleBackColor = true;
-            this.btnPrint.Visible = false;
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
             // openFileDialogLogo
@@ -228,11 +224,21 @@ namespace FaturaLogo
             // 
             this.openFileDialogKase.FileName = "openFileDialogKase";
             // 
+            // btnKarekodKaldir
+            // 
+            this.btnKarekodKaldir.Location = new System.Drawing.Point(6, 128);
+            this.btnKarekodKaldir.Name = "btnKarekodKaldir";
+            this.btnKarekodKaldir.Size = new System.Drawing.Size(158, 23);
+            this.btnKarekodKaldir.TabIndex = 16;
+            this.btnKarekodKaldir.Text = "Karekod Kaldır";
+            this.btnKarekodKaldir.UseVisualStyleBackColor = true;
+            this.btnKarekodKaldir.Click += new System.EventHandler(this.btnKarekodKaldir_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1298, 613);
+            this.ClientSize = new System.Drawing.Size(1298, 709);
             this.Controls.Add(this.grpBox1);
             this.Controls.Add(this.FaturayaLogoBrowser);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -268,6 +274,7 @@ namespace FaturaLogo
         private System.Windows.Forms.OpenFileDialog openFileDialogKase;
         private System.Windows.Forms.Button btnKaseSec;
         private System.Windows.Forms.SaveFileDialog saveFileDialogPdf;
+        private System.Windows.Forms.Button btnKarekodKaldir;
     }
 }
 
