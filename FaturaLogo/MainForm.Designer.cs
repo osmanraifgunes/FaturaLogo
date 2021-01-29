@@ -39,18 +39,19 @@ namespace FaturaLogo
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.grpBox1 = new System.Windows.Forms.GroupBox();
-            this.btnPrint = new System.Windows.Forms.Button();
-            this.openFileDialogLogo = new System.Windows.Forms.OpenFileDialog();
-            this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
-            this.pictureBoxKase = new System.Windows.Forms.PictureBox();
+            this.btnKaseSec = new System.Windows.Forms.Button();
+            this.btnPdf = new System.Windows.Forms.Button();
             this.radioKase = new System.Windows.Forms.RadioButton();
             this.radioLogo = new System.Windows.Forms.RadioButton();
-            this.btnPdf = new System.Windows.Forms.Button();
+            this.pictureBoxKase = new System.Windows.Forms.PictureBox();
+            this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
+            this.btnPrint = new System.Windows.Forms.Button();
+            this.openFileDialogLogo = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogKase = new System.Windows.Forms.OpenFileDialog();
-            this.btnKaseSec = new System.Windows.Forms.Button();
+            this.saveFileDialogPdf = new System.Windows.Forms.SaveFileDialog();
             this.grpBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxKase)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // btnFaturaSec
@@ -146,38 +147,27 @@ namespace FaturaLogo
             this.grpBox1.TabStop = false;
             this.grpBox1.Text = "İşlemler";
             // 
-            // btnPrint
+            // btnKaseSec
             // 
-            this.btnPrint.Location = new System.Drawing.Point(6, 225);
-            this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(158, 23);
-            this.btnPrint.TabIndex = 6;
-            this.btnPrint.Text = "Yazdır";
-            this.btnPrint.UseVisualStyleBackColor = true;
-            this.btnPrint.Visible = false;
-            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
+            this.btnKaseSec.Location = new System.Drawing.Point(6, 77);
+            this.btnKaseSec.Name = "btnKaseSec";
+            this.btnKaseSec.Size = new System.Drawing.Size(158, 23);
+            this.btnKaseSec.TabIndex = 15;
+            this.btnKaseSec.Text = "Kaşe Seç";
+            this.btnKaseSec.UseVisualStyleBackColor = true;
+            this.btnKaseSec.Visible = false;
+            this.btnKaseSec.Click += new System.EventHandler(this.btnKaseSec_Click);
             // 
-            // openFileDialogLogo
+            // btnPdf
             // 
-            this.openFileDialogLogo.FileName = "openFileDialogLogo";
-            // 
-            // pictureBoxLogo
-            // 
-            this.pictureBoxLogo.Location = new System.Drawing.Point(6, 305);
-            this.pictureBoxLogo.Name = "pictureBoxLogo";
-            this.pictureBoxLogo.Size = new System.Drawing.Size(158, 105);
-            this.pictureBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxLogo.TabIndex = 7;
-            this.pictureBoxLogo.TabStop = false;
-            // 
-            // pictureBoxKase
-            // 
-            this.pictureBoxKase.Location = new System.Drawing.Point(6, 416);
-            this.pictureBoxKase.Name = "pictureBoxKase";
-            this.pictureBoxKase.Size = new System.Drawing.Size(158, 105);
-            this.pictureBoxKase.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxKase.TabIndex = 10;
-            this.pictureBoxKase.TabStop = false;
+            this.btnPdf.Location = new System.Drawing.Point(6, 186);
+            this.btnPdf.Name = "btnPdf";
+            this.btnPdf.Size = new System.Drawing.Size(158, 23);
+            this.btnPdf.TabIndex = 13;
+            this.btnPdf.Text = "pdf çıktı";
+            this.btnPdf.UseVisualStyleBackColor = true;
+            this.btnPdf.Visible = false;
+            this.btnPdf.Click += new System.EventHandler(this.btnPdf_Click);
             // 
             // radioKase
             // 
@@ -201,31 +191,42 @@ namespace FaturaLogo
             this.radioLogo.Text = "logo ekle";
             this.radioLogo.UseVisualStyleBackColor = true;
             // 
-            // btnPdf
+            // pictureBoxKase
             // 
-            this.btnPdf.Location = new System.Drawing.Point(6, 186);
-            this.btnPdf.Name = "btnPdf";
-            this.btnPdf.Size = new System.Drawing.Size(158, 23);
-            this.btnPdf.TabIndex = 13;
-            this.btnPdf.Text = "pdf çıktı";
-            this.btnPdf.UseVisualStyleBackColor = true;
-            this.btnPdf.Visible = false;
-            this.btnPdf.Click += new System.EventHandler(this.btnPdf_Click);
+            this.pictureBoxKase.Location = new System.Drawing.Point(6, 416);
+            this.pictureBoxKase.Name = "pictureBoxKase";
+            this.pictureBoxKase.Size = new System.Drawing.Size(158, 105);
+            this.pictureBoxKase.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxKase.TabIndex = 10;
+            this.pictureBoxKase.TabStop = false;
+            // 
+            // pictureBoxLogo
+            // 
+            this.pictureBoxLogo.Location = new System.Drawing.Point(6, 305);
+            this.pictureBoxLogo.Name = "pictureBoxLogo";
+            this.pictureBoxLogo.Size = new System.Drawing.Size(158, 105);
+            this.pictureBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxLogo.TabIndex = 7;
+            this.pictureBoxLogo.TabStop = false;
+            // 
+            // btnPrint
+            // 
+            this.btnPrint.Location = new System.Drawing.Point(6, 225);
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(158, 23);
+            this.btnPrint.TabIndex = 6;
+            this.btnPrint.Text = "Yazdır";
+            this.btnPrint.UseVisualStyleBackColor = true;
+            this.btnPrint.Visible = false;
+            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
+            // 
+            // openFileDialogLogo
+            // 
+            this.openFileDialogLogo.FileName = "openFileDialogLogo";
             // 
             // openFileDialogKase
             // 
             this.openFileDialogKase.FileName = "openFileDialogKase";
-            // 
-            // btnKaseSec
-            // 
-            this.btnKaseSec.Location = new System.Drawing.Point(6, 77);
-            this.btnKaseSec.Name = "btnKaseSec";
-            this.btnKaseSec.Size = new System.Drawing.Size(158, 23);
-            this.btnKaseSec.TabIndex = 15;
-            this.btnKaseSec.Text = "Kaşe Seç";
-            this.btnKaseSec.UseVisualStyleBackColor = true;
-            this.btnKaseSec.Visible = false;
-            this.btnKaseSec.Click += new System.EventHandler(this.btnKaseSec_Click);
             // 
             // MainForm
             // 
@@ -240,8 +241,8 @@ namespace FaturaLogo
             this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             this.grpBox1.ResumeLayout(false);
             this.grpBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxKase)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -266,6 +267,7 @@ namespace FaturaLogo
         private System.Windows.Forms.PictureBox pictureBoxKase;
         private System.Windows.Forms.OpenFileDialog openFileDialogKase;
         private System.Windows.Forms.Button btnKaseSec;
+        private System.Windows.Forms.SaveFileDialog saveFileDialogPdf;
     }
 }
 

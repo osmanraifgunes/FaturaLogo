@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenHtmlToPdf;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -62,7 +63,7 @@ namespace FaturaLogo
                 userimage.Style = "width:150px; height:150px;";
                 element.AppendChild(userimage);
             }
-           
+
 
         }
 
@@ -76,6 +77,13 @@ namespace FaturaLogo
                 {
                     if (Path.GetExtension(openFileDialogFatura.FileName) == ".zip")
                     {
+                        if (ZipFile.OpenRead(openFileDialogFatura.FileName)
+                                        .Entries.Where(x => x.Name.Contains(".html"))
+                                        .FirstOrDefault() == null)
+                        {
+                            MessageBox.Show("Dosya içerisinde html fatura yok.");
+                            return;
+                        }
                         string text = new string((new StreamReader(
                                         ZipFile.OpenRead(openFileDialogFatura.FileName)
                                         .Entries.Where(x => x.Name.Contains(".html"))
@@ -116,6 +124,7 @@ namespace FaturaLogo
                     txtWidth.Visible = true;
                     txtHeight.Visible = true;
                     btnPrint.Visible = true;
+                    btnPdf.Visible = true;
                     txtWidth.Text = "150";
                     txtHeight.Text = "150";
                     File.WriteAllText("previoulogo.txt", openFileDialogLogo.FileName);
@@ -193,7 +202,16 @@ namespace FaturaLogo
 
         private void btnPdf_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Yakında eklenecek");
+            var pdf = Pdf.From(FaturayaLogoBrowser.DocumentText).Content();
+            saveFileDialogPdf.DefaultExt = "pdf";
+            saveFileDialogPdf.CheckPathExists = true;
+            saveFileDialogPdf.Filter = "pdf (*.pdf)|*.pdf|All files (*.*)|*.*";
+            saveFileDialogPdf.FileName = "fatura" + DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "-" + DateTime.Now.Hour + "-" + DateTime.Now.Minute;
+            if (saveFileDialogPdf.ShowDialog() == DialogResult.OK)
+            {
+                File.WriteAllBytes(saveFileDialogPdf.FileName, pdf);
+            }
+
         }
 
         private void btnKaseSec_Click(object sender, EventArgs e)
@@ -209,6 +227,7 @@ namespace FaturaLogo
                     txtWidth.Visible = true;
                     txtHeight.Visible = true;
                     btnPrint.Visible = true;
+                    btnPdf.Visible = true;
                     txtWidth.Text = "150";
                     txtHeight.Text = "150";
                     File.WriteAllText("previoukase.txt", openFileDialogKase.FileName);
